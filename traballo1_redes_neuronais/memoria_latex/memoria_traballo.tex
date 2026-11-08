@@ -1,0 +1,252 @@
+\documentclass[12pt,a4paper,twoside]{article}
+\usepackage{tabularx}
+\usepackage[utf8]{inputenc}
+\usepackage[galician]{babel}
+\usepackage{amsmath}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{upgreek}
+\usepackage{booktabs}
+\usepackage{esint}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[letterpaper,top=3.5cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm,footskip=1.25cm %, showframe
+]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{braket}
+\usepackage{upgreek}
+\usepackage{tensor}
+\usepackage{changepage}
+
+\usepackage{diffcoeff}[=v4]
+\diffdef{ pvrule } { op-symbol = \partial}
+
+\usepackage{titlesec}
+% Teño que ver mellor como facer con este paquete para crear unha clase menor a \subsubsection{}
+%\titleformat{\part}[hang]{\normalfont\Huge\bfseries}{\texttt{\thepart} -}{0.5em}{}
+\titleclass{\subsubsub}{straight}[\subsubsection] 
+\newcounter{subsubsub} 
+\renewcommand{\thesubsubsub}{\Alph{subsubsub}}
+
+%\titlecontents{\subsubsub}[⟨left⟩]{⟨above-code⟩} {⟨numbered-entry-format⟩}{⟨numberless-entry-format⟩} {⟨filler-page-format⟩}[⟨below-code⟩]
+
+% Pódeselle meter unha tipografía guapa
+\author{Sebastián Táboas Pazo\\
+35679654F}
+\title{\huge{\textbf{Teorías de Lovelock}}}
+\date{}
+
+% Fáltame implementar a data na marxe superior (por defecto xenérase inmediatamente despois da autoría)
+
+\usepackage{fancyhdr,tikz}
+\renewcommand{\headrulewidth}{1.5pt}
+
+
+\makeatletter
+\renewcommand{\footrule}{
+    \if@fancyplain\let\footrulewidth\plainfootrulewidth\fi
+      \ifdim\footrulewidth>0pt
+        \vspace{20pt}
+        \makebox[\textwidth]{
+          \rule[1ex]{0.46\textwidth}{1.6pt}
+          \hspace{1em}
+          \raisebox{0.5ex}{\thepage}
+          \hspace{1em}
+          \rule[1ex]{0.46\textwidth}{1.6pt}
+        }
+        \vspace{6pt}
+      \fi
+    }
+\makeatother
+
+\renewcommand{\sectionmark}[1]{
+  \markboth{\thesection. - \MakeUppercase{#1}}{}
+}
+
+\NewDocumentCommand\Cita{ m m }{%
+    \begin{minipage}[t]{\hsize}
+        \vspace*{0.5em}
+        \begin{quotation}
+            \begin{flushright}
+            {\noindent \itshape #1}\\
+            \end{flushright}
+            \vspace{-4ex}
+            % \hfill — #2 % Como estaba antes <-
+            \hfill
+            \begin{flushright}
+            — #2
+            \end{flushright}
+        \end{quotation}
+        \vspace*{0.5em}
+    \end{minipage}
+}
+
+\fancypagestyle{main}{
+    \fancyhf{}
+    \fancyhead[RO]{\bfseries\leftmark}
+    \fancyhead[LE]{\texttt{\rightmark}}
+    \fancyhead[RE]{Sebastián Táboas Pazo}
+    \renewcommand{\footrulewidth}{1.5pt}
+    %\fancyfoot[C]{\hskip-0.01cm\vtop{\vskip.05cm\hsize=7.5cm \drulefill}
+    % ~~\thepage ~~\hskip0.01cm \vtop{\vskip.05cm\hsize=7.44cm \drulefill}}
+}
+
+\fancypagestyle{anexo}{
+    \fancyhf{}
+    \fancyhead[RO]{\textbf{Anexos -}}
+    \fancyhead[LE]{\texttt{\rightmark}}
+    \renewcommand{\footrulewidth}{1.5pt}
+    %\fancyfoot[C]{\hskip-0.01cm\vtop{\vskip.05cm\hsize=7.5cm \drulefill}
+    % ~~\thepage ~~\hskip0.01cm \vtop{\vskip.05cm\hsize=7.44cm \drulefill}}
+}
+
+
+\fancypagestyle{index}{
+    \fancyhf{}
+    \rhead[Gravitación - 2025/2026]{}
+    \lhead[]{\rightmark}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{bib}{
+    \fancyhf{}
+    \fancyhead[LE]{\bfseries\leftmark}
+    \fancyhead[RO]{Gravitación - 2025/2026}
+    \fancyhead[RE]{}
+    \renewcommand{\footrulewidth}{1.5pt}
+}
+\fancypagestyle{apaño1}{
+    \fancyhf{}
+    \fancyhead[LE]{\texttt{5.1.\hspace{1em}Teorema de Lovelock}}
+    \fancyhead[RE]{Sebastián Táboas Pazo}
+    \renewcommand{\footrulewidth}{1.5pt}
+    %\fancyfoot[C]{\hskip-0.01cm\vtop{\vskip.05cm\hsize=7.5cm \drulefill}
+    % ~~\thepage ~~\hskip0.01cm \vtop{\vskip.05cm\hsize=7.44cm \drulefill}}
+}\fancypagestyle{apaño2}{
+    \fancyhf{}
+    \fancyhead[LE]{\texttt{5.2.\hspace{1em}Acción de Lovelock en 2, 4 e 5 dimensións}}
+    \fancyhead[RE]{Sebastián Táboas Pazo}
+    \renewcommand{\footrulewidth}{1.5pt}
+    %\fancyfoot[C]{\hskip-0.01cm\vtop{\vskip.05cm\hsize=7.5cm \drulefill}
+    % ~~\thepage ~~\hskip0.01cm \vtop{\vskip.05cm\hsize=7.44cm \drulefill}}
+}
+\usepackage{titling}
+\setlength{\droptitle}{2.5cm}
+
+% estos son os comandos que poñen taboaa, figura, ec como (s.n)
+% 
+% \makeatletter
+% \@addtoreset{equation}{section}
+% \renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+% \def\equation@reset{%
+%   \setcounter{equation}{-1}} % Comezar dende -1 para que a primeira sexa 0
+% \makeatother
+
+% \makeatletter
+% \@addtoreset{table}{section}
+% \renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+% \def\table@reset{%
+%   \setcounter{table}{-1}} % Comezar dende -1 para que a primeira sexa 0
+% \makeatother
+
+% \makeatletter
+% \@addtoreset{figure}{section}
+% \renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+% \def\figure@reset{%
+%   \setcounter{figure}{-1}} % Comezar dende -1 para que a primeira sexa 0
+% \makeatother
+
+\usepackage[backend=biber,style=alphabetic,sorting=nyt]{biblatex}
+
+\addbibresource{./bibliografia.bib}
+ 
+
+\begin{document}
+
+\pagenumbering{gobble}
+\begin{titlepage}
+    \centering
+    \maketitle
+    \vspace{20pt}
+    \begin{tikzpicture}[baseline, every node/.style={anchor=center}]
+        \begin{axis}[hide axis,scale=0.4,anchor=center,axis equal,
+                width=33cm,height=12cm]
+            \addplot[black, thick, smooth] table
+            %[x expr=\thisrowno{0}*1.5, y expr=\thisrowno{1}*1.5]
+                {./clotoide.dat}; % Sin puntos y con curva suave
+            \addplot[thick, black, domain=-3:-1, samples=100] plot (\x, {0});
+            \addplot[thick, black, domain=1:3, samples=100] plot (\x, {0});
+        \end{axis}
+    \end{tikzpicture}
+    \vfill
+    \begin{minipage}[t]{1\textwidth}
+    \centering
+    \includegraphics[width=0.56\textwidth]{normal.png}
+    \end{minipage}
+    \vspace{1.6cm}\newline
+    \texttt{Data: \today}
+\end{titlepage}\newpage%\null\newpage
+
+\pagestyle{index}
+\tableofcontents
+\newpage
+
+\pagestyle{main}
+\pagenumbering{arabic}
+
+\section*{Índice de contidos}
+\begin{itemize}
+	\item 0. Introdución
+	\item 1. Depuración de datos
+	\item 2. Representacións estatísticas
+	\item 3. Análise con sklearn (regresión loxística)
+	\item \hspace{4em}3.0.1 Modelo Linear
+	\item \hspace{4	em}3.0.2 Modelo RBF
+	\item \hspace{2em}3.1 Análise sen sesgo
+	\item \hspace{4em}3.1.1 Estimación, training e resultados do Modelo Linear/Loxístico linear
+	\item \hspace{4em}3.1.2 Estimación, training e resultados do Modelo RBF
+	\item \hspace{4em}3.1.3 Estimación, training e resultados do Modelo RandomForest
+	\item \hspace{4em}3.1.4 Estimación, training e resultados do Modelo HistGradientBoosting
+	\item \hspace{2em}3.2 Conclusións
+	\item \hspace{2em}3.3 Análise de regresións (Score)
+	\item 4. Análise con redes neuronais
+	\item 5. Conclusións finais
+	\item Apéndice Cross Validation en redes neuronais
+\end{itemize}
+
+\section*{Resumo}
+O noso obxectivo neste traballo foi predicir resultados dun dataframe mediante métodos de machine learning. Primeiro limpiamos un pouco os nosos datos e facemos e os adaptamos para podelos procesor. Nun segundo paso estudamos un pouco como son esos datos aínda que non nos paramos realmente a facer ningunha clase de estudo estatístico. Despois empregamos funcións da librería de sklearn para obter predicións. Nun primer momento aplicamos o modelo máis sinxelo, unha regresión linear que optimizamos os seus parámetros cunha cross validation pero máis desglosada e mostrando as vísceras do cálculo; facelo así supón unha maior carga computacional pero vese mellor o que fan os programas de cross validation que usaremos máis adiante con GridSearchCV ou keras_tuner.RandomSearch. Os resultados da recta axustada son aínda bastante pésimos, empregamos tamén un modelo RBF (Radial Basis Function) que considera no linearidades mellorando increíblemente o sistema. Como atopamos que este segundo ten unha predición altísima consideramos que hai algunha das nosas variables que está moi correlacionada coa que queremos determinar aplicando mutual_info_classif.
+
+Volvemos a crear modelos pero esta vez antes de aplicalos realizamos validación cruzada coa función GridSearchCV para optimizar os parámetros dos modelos. Nun primeiro lugar repetimos co modelo linear (loss = 'hinge') que xa vemos que non nos dá moi bos resultados e o comparamos coa regresión loxística (loss = 'log_loss) e xa por aforrar só vemos que tal procesa a regresión loxística. Aplicamos cv sobre a rbf tamén e seguimos obtendo moi bos resultados (de feito será a técnica que mellor prediga os nosos resultados durante todo o traballo). Engadimos agora dous modelos máis sobre os que tamén facemos cv: RandomForest e HistGradientBoosting. O primeiro dá resultados mellores que a regresión loxística pero cae 5 puntos detrás do rbf e ademais ten overfitting (isto vese en que a accuracy_score para os datos de entrenamento ronda o valor da unidade). O segundo modelo mellora respecto do anterior e, aínda que menos, segue tendo bastante overfitting.
+
+falar das redes
+
+\section*{Algúns resultados da optimización de redes}
+
+Algúns resultados teñen un código identificativo
+% poñer as imaxes e facer o itematize dos indices
+
+\clearpage
+\pagestyle{bib}
+\renewcommand{\thesection}{}
+\printbibliography[heading=bibintoc,title={Bibliografía}]
+
+\end{document}
+
+% Exemplos elementais do paquete 'diffcoeff'
+\begin{gather}
+    \diff[n]{f}{x}[x_0]\\
+    \diff*{(ax^2+bx+c)}x\\
+    \diffp!{F(x,y)}x\\
+    \diffp ST[V]\\
+    \diffp L{q_k}-\diff*{\diffp L{\dot{q}_k}[]}t = 0\\
+    \diffp L{q_k}-\diff*{\diffp L{\dot{q}_k}[]}t = 0\\
+    \diffp[2,3]F{x,y,z}\\
+    \diff.pvrule.{F(x,y)}x[x=1]
+\end{gather}
