@@ -231,7 +231,7 @@ for i in range(5):
 
 plt.tight_layout()
 fig.show()
-plt.savefig("C:/Users/sebas/Desktop/Uni/Grao Física/4º fisica/biofisica/traballo1_redes_neuronais/layers.png")
+plt.savefig("C:/Users/sebas/Desktop/Uni/Grao Física/4º fisica/biofisica/traballo1_redes_neuronais/layers.pdf", dpi = 600)
 
 
 # mish x * sigmoid(x)

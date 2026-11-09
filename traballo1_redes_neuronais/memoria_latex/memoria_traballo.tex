@@ -3,7 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[galician]{babel}
 \usepackage{amsmath}
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+% \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{upgreek}
@@ -19,13 +19,11 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{pgfplots}
 \usepackage{multicol}
-\usepackage{braket}
-\usepackage{upgreek}
-\usepackage{tensor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+
 \usepackage{changepage}
 
-\usepackage{diffcoeff}[=v4]
-\diffdef{ pvrule } { op-symbol = \partial}
 
 \usepackage{titlesec}
 % Teño que ver mellor como facer con este paquete para crear unha clase menor a \subsubsection{}
@@ -39,7 +37,7 @@
 % Pódeselle meter unha tipografía guapa
 \author{Sebastián Táboas Pazo\\
 35679654F}
-\title{\huge{\textbf{Teorías de Lovelock}}}
+\title{\huge{\textbf{Machine Learning\\ Memoria de traballo}}}
 \date{}
 
 % Fáltame implementar a data na marxe superior (por defecto xenérase inmediatamente despois da autoría)
@@ -109,7 +107,7 @@
 
 \fancypagestyle{index}{
     \fancyhf{}
-    \rhead[Gravitación - 2025/2026]{}
+    \rhead[Biofísica - 2026/2027]{}
     \lhead[]{\rightmark}
     \renewcommand{\footrulewidth}{0pt}
 }
@@ -117,25 +115,12 @@
 \fancypagestyle{bib}{
     \fancyhf{}
     \fancyhead[LE]{\bfseries\leftmark}
-    \fancyhead[RO]{Gravitación - 2025/2026}
+    \fancyhead[RO]{Biofísica - 2026/2027}
     \fancyhead[RE]{}
     \renewcommand{\footrulewidth}{1.5pt}
 }
-\fancypagestyle{apaño1}{
-    \fancyhf{}
-    \fancyhead[LE]{\texttt{5.1.\hspace{1em}Teorema de Lovelock}}
-    \fancyhead[RE]{Sebastián Táboas Pazo}
-    \renewcommand{\footrulewidth}{1.5pt}
-    %\fancyfoot[C]{\hskip-0.01cm\vtop{\vskip.05cm\hsize=7.5cm \drulefill}
-    % ~~\thepage ~~\hskip0.01cm \vtop{\vskip.05cm\hsize=7.44cm \drulefill}}
-}\fancypagestyle{apaño2}{
-    \fancyhf{}
-    \fancyhead[LE]{\texttt{5.2.\hspace{1em}Acción de Lovelock en 2, 4 e 5 dimensións}}
-    \fancyhead[RE]{Sebastián Táboas Pazo}
-    \renewcommand{\footrulewidth}{1.5pt}
-    %\fancyfoot[C]{\hskip-0.01cm\vtop{\vskip.05cm\hsize=7.5cm \drulefill}
-    % ~~\thepage ~~\hskip0.01cm \vtop{\vskip.05cm\hsize=7.44cm \drulefill}}
-}
+
+
 \usepackage{titling}
 \setlength{\droptitle}{2.5cm}
 
@@ -162,9 +147,9 @@
 %   \setcounter{figure}{-1}} % Comezar dende -1 para que a primeira sexa 0
 % \makeatother
 
-\usepackage[backend=biber,style=alphabetic,sorting=nyt]{biblatex}
+% \usepackage[backend=biber,style=alphabetic,sorting=nyt]{biblatex}
 
-\addbibresource{./bibliografia.bib}
+% \addbibresource{./bibliografia.bib}
  
 
 \begin{document}
@@ -193,60 +178,489 @@
     \texttt{Data: \today}
 \end{titlepage}\newpage%\null\newpage
 
-\pagestyle{index}
-\tableofcontents
-\newpage
 
 \pagestyle{main}
 \pagenumbering{arabic}
 
+Pódese revisar o repositorio do traballo con todos os seus respectivos commits e moitos máis resultados intermedios no seguinte enlace:\\
+\url{https://github.com/sebastian-taboas/Biophysics/tree/main/traballo1_redes_neuronais}
+
 \section*{Índice de contidos}
 \begin{itemize}
-	\item 0. Introdución
-	\item 1. Depuración de datos
-	\item 2. Representacións estatísticas
-	\item 3. Análise con sklearn (regresión loxística)
-	\item \hspace{4em}3.0.1 Modelo Linear
-	\item \hspace{4	em}3.0.2 Modelo RBF
-	\item \hspace{2em}3.1 Análise sen sesgo
-	\item \hspace{4em}3.1.1 Estimación, training e resultados do Modelo Linear/Loxístico linear
-	\item \hspace{4em}3.1.2 Estimación, training e resultados do Modelo RBF
-	\item \hspace{4em}3.1.3 Estimación, training e resultados do Modelo RandomForest
-	\item \hspace{4em}3.1.4 Estimación, training e resultados do Modelo HistGradientBoosting
-	\item \hspace{2em}3.2 Conclusións
-	\item \hspace{2em}3.3 Análise de regresións (Score)
-	\item 4. Análise con redes neuronais
-	\item 5. Conclusións finais
-	\item Apéndice Cross Validation en redes neuronais
+	\item[] 0. Introdución
+	\item[] 1. Depuración de datos
+	\item[] 2. Representacións estatísticas
+	\item[] 3. Análise con sklearn (regresión loxística)
+	\item[] \hspace{4em}3.0.1 Modelo Linear
+	\item[] \hspace{4em}3.0.2 Modelo RBF
+	\item[] \hspace{2em}3.1 Análise sen sesgo
+	\item[] \hspace{4em}3.1.1 Estimación, training e resultados do Modelo Linear/Loxístico linear
+	\item[] \hspace{4em}3.1.2 Estimación, training e resultados do Modelo RBF
+	\item[] \hspace{4em}3.1.3 Estimación, training e resultados do Modelo RandomForest
+	\item[] \hspace{4em}3.1.4 Estimación, training e resultados do Modelo HistGradientBoosting
+	\item[] \hspace{2em}3.2 Conclusións
+	\item[] \hspace{2em}3.3 Análise de regresións (Score)
+	\item[] 4. Análise con redes neuronais
+	\item[] 5. Conclusións finais
+	\item[] Apéndice Cross Validation en redes neuronais
 \end{itemize}
 
 \section*{Resumo}
-O noso obxectivo neste traballo foi predicir resultados dun dataframe mediante métodos de machine learning. Primeiro limpiamos un pouco os nosos datos e facemos e os adaptamos para podelos procesor. Nun segundo paso estudamos un pouco como son esos datos aínda que non nos paramos realmente a facer ningunha clase de estudo estatístico. Despois empregamos funcións da librería de sklearn para obter predicións. Nun primer momento aplicamos o modelo máis sinxelo, unha regresión linear que optimizamos os seus parámetros cunha cross validation pero máis desglosada e mostrando as vísceras do cálculo; facelo así supón unha maior carga computacional pero vese mellor o que fan os programas de cross validation que usaremos máis adiante con GridSearchCV ou keras_tuner.RandomSearch. Os resultados da recta axustada son aínda bastante pésimos, empregamos tamén un modelo RBF (Radial Basis Function) que considera no linearidades mellorando increíblemente o sistema. Como atopamos que este segundo ten unha predición altísima consideramos que hai algunha das nosas variables que está moi correlacionada coa que queremos determinar aplicando mutual_info_classif.
 
-Volvemos a crear modelos pero esta vez antes de aplicalos realizamos validación cruzada coa función GridSearchCV para optimizar os parámetros dos modelos. Nun primeiro lugar repetimos co modelo linear (loss = 'hinge') que xa vemos que non nos dá moi bos resultados e o comparamos coa regresión loxística (loss = 'log_loss) e xa por aforrar só vemos que tal procesa a regresión loxística. Aplicamos cv sobre a rbf tamén e seguimos obtendo moi bos resultados (de feito será a técnica que mellor prediga os nosos resultados durante todo o traballo). Engadimos agora dous modelos máis sobre os que tamén facemos cv: RandomForest e HistGradientBoosting. O primeiro dá resultados mellores que a regresión loxística pero cae 5 puntos detrás do rbf e ademais ten overfitting (isto vese en que a accuracy_score para os datos de entrenamento ronda o valor da unidade). O segundo modelo mellora respecto do anterior e, aínda que menos, segue tendo bastante overfitting.
+O noso obxectivo neste traballo foi predicir resultados dun dataframe mediante métodos de machine learning. Primeiro limpiamos un pouco os nosos 
+datos e facemos e os adaptamos para podelos procesor. Nun segundo paso estudamos un pouco como son esos datos aínda que non nos paramos realmente
+a facer ningunha clase de estudo estatístico. Despois empregamos funcións da librería de sklearn para obter predicións. Nun primer momento aplicamos
+o modelo máis sinxelo, unha regresión linear que optimizamos os seus parámetros cunha cross validation pero máis desglosada e mostrando as vísceras 
+do cálculo; facelo así supón unha maior carga computacional pero vese mellor o que fan os programas de cross validation que usaremos máis adiante 
+con GridSearchCV ou keras\_tuner.RandomSearch. Os resultados da recta axustada son aínda bastante pésimos, empregamos tamén un modelo RBF (Radial 
+BasisFunction) que considera no linearidades mellorando increíblemente o sistema. Como atopamos que este segundo ten unha predición altísima consideramos que
+hai algunha das nosas variables que está moi correlacionada coa que queremos determinar aplicando mutual\_info\_classif.
 
-falar das redes
+Volvemos a crear modelos pero esta vez antes de aplicalos realizamos validación cruzada coa función GridSearchCV para optimizar os parámetros dos modelos. 
+Nun primeiro lugar repetimos co modelo linear (loss = hinge) que xa vemos que non nos dá moi bos resultados e o comparamos coa regresión loxística (loss = 
+log\_loss) e xa por aforrar só vemos que tal procesa a regresión loxística. Aplicamos cv sobre a rbf tamén e seguimos obtendo moi bos resultados (de feito 
+será a técnica que mellor prediga os nosos resultados durante todo o traballo). Engadimos agora dous modelos máis sobre os que tamén facemos cv: RandomForest
+e HistGradientBoosting. O primeiro dá resultados mellores que a regresión loxística pero cae 5 puntos detrás do rbf e ademais ten overfitting (isto vese 
+en que a accuracy\_score para os datos de entrenamento ronda o valor da unidade). O segundo modelo mellora respecto do anterior e, aínda que menos, segue 
+tendo bastante overfitting.
 
+Agora toca o momento de usar keras e crear redes neuronais, aínda que breve, é a sección que máis horas ten detrás. Lendo documentación das funcións de activación
+das neuronas e moitas outras funcións que incorpora keras nas súas librarías pretendimos crear unha rede óptima, i.e., que con poucas iteracións (epochs) no
+entrenamento conseguiramos resultados moi bos. En xeral as nosas redes saturaban a precisión sobre os 80 puntos, non se conseguiu melloralo nin tampouco
+entendo moi ben por que satura. A gran maioría de redes simples empezaban a memorizar os datos baixando moito a precisión no teste e senón a función de loss mantiña
+valores bastante altos e algo inestables, a solució para isto foi implementar unha penalización sobre os pesos na función de activación: implementamos L2 de 
+keras.regularizers para matar o crecemento continuado dos pesos nos parámetros ao entrenar moitas neuronas. A elección dos núcleos dos pesos é un pouco
+por conveniencia, na bibliografía recoméndase utilizar os que aparecen para cada función de activación. Un valor importante era o optimizador, 
+empregar activadores basados en RMSprop (Adam e derivados) por algunha razón, aínda que conseguían valores lixeiramente mellores como velocidade ou precisión,
+aparecía un ruído moi significativo nas funcións de loss e de accuracy, polo que a nosa mellor opción foi empregar SGD sen momento (aplicar nesterov produce en
+xeral diverxencias por enriba das 60 epochs). Probouse tamén a poñer distintos valores de learning rate, incluso implemetouse vía
+keras.optimizers.schedules learnings rates dinámicos que se axusten mellor nas fases de aprendizaxe pero non melloraba a cousa. Finalmente, practicamente calquera
+rede con case calquera función de activación comportábase ben, só había dous problemas: as que funcionaban rápido presentaban overfit antes de acadar a saturación
+dos 80 puntos na precisión e senón eran considerablemente máis lentas; a diferencia recaía na cantidade de units (neuronas) das capas que incrementa os
+parámetros de axuste segundo
+\begin{align*}
+    n_{\text{parametros}}^j = (units_{j-1} + 1) * units_j.
+\end{align*}
+Escollimos a primeira vía, as rápidas pero overfiteadas pero resolveuse engadindo capas layers.Dropout().
+
+\newpage
 \section*{Algúns resultados da optimización de redes}
 
-Algúns resultados teñen un código identificativo
-% poñer as imaxes e facer o itematize dos indices
+Fixéronse moitas probas de testeo a machete para comparar parámetros con moitas funcións de activación, entre elas unha rede con 2 capas Dense(relu) e unha Dense(softplus)
+ademais da de input e a de saída con softmax que podemos visualizar as funcións de loss máis abaixo (coas que estudamos se ocorría overfitting ou 
+underfitting ademais da estabilidade). As imaxes están codificados segundo a táboa de abaixo.
 
-\clearpage
-\pagestyle{bib}
-\renewcommand{\thesection}{}
-\printbibliography[heading=bibintoc,title={Bibliografía}]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        activate function & optimizer & learning rate & batch size    \\ \hline
+        ~ & x1xx = SGD & ~ &  ~  \\ \hline
+        1xxx = softplus postInput & x2xx = SGD + nesterov & xx1x = 0.01 & xxx1 = 16    \\ \hline
+        2xxx = softplus no medio & x3xx = Adam & xx2x = 0.001 & xxx2 = 8    \\ \hline
+        ~ & x4xx = Nadam & xx3x = 0.0001 &     \\ \hline
+        ~ & x5xx = AdamW & ~ &  ~   \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1111.png}
+        \subcaption{1111}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1121.png}
+        \subcaption{1121}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1131.png}
+        \subcaption{1131}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1112.png}
+        \subcaption{1112}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1122.png}
+        \subcaption{1122}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1132.png}
+        \subcaption{1132}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1211.png}
+        \subcaption{1211}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1221.png}
+        \subcaption{1221}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1231.png}
+        \subcaption{1231}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1212.png}
+        \subcaption{1212}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1222.png}
+        \subcaption{1222}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1232.png}
+        \subcaption{1232}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1311.png}
+        \subcaption{1311}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1321.png}
+        \subcaption{1321}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1331.png}
+        \subcaption{1331}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1312.png}
+        \subcaption{1312}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1322.png}
+        \subcaption{1322}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1332.png}
+        \subcaption{1332}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1411.png}
+        \subcaption{1411}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1421.png}
+        \subcaption{1421}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1431.png}
+        \subcaption{1431}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1412.png}
+        \subcaption{1412}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1422.png}
+        \subcaption{1422}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1432.png}
+        \subcaption{1432}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1511.png}
+        \subcaption{1511}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1521.png}
+        \subcaption{1521}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1512.png}
+        \subcaption{1512}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/1522.png}
+        \subcaption{1522}
+    \end{subfigure}
+
+\end{figure}
+
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2111.png}
+        \subcaption{2111}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2121.png}
+        \subcaption{2121}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2131.png}
+        \subcaption{2131}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2112.png}
+        \subcaption{2112}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2122.png}
+        \subcaption{2122}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2132.png}
+        \subcaption{2132}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2211.png}
+        \subcaption{2211}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2221.png}
+        \subcaption{2221}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2231.png}
+        \subcaption{2231}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2212.png}
+        \subcaption{2212}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2222.png}
+        \subcaption{2222}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2232.png}
+        \subcaption{2232}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2311.png}
+        \subcaption{2311}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2321.png}
+        \subcaption{2321}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2331.png}
+        \subcaption{2331}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2312.png}
+        \subcaption{2312}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2322.png}
+        \subcaption{2322}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2332.png}
+        \subcaption{2332}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2411.png}
+        \subcaption{2411}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2421.png}
+        \subcaption{2421}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2431.png}
+        \subcaption{2431}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2412.png}
+        \subcaption{2412}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2422.png}
+        \subcaption{2422}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2432.png}
+        \subcaption{2432}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2511.png}
+        \subcaption{2511}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2521.png}
+        \subcaption{2521}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2512.png}
+        \subcaption{2512}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/2522.png}
+        \subcaption{2522}
+    \end{subfigure}
+\end{figure}
+\newpage
+
+Ademais disto cando conseguimos unhas redes que predicían bastante ben aplicamos un cv 
+sobre elas para optimizar os parámetros. Esiximos 100 probas distintas de parámetros sobre a nosa rede, obviamente había moitas 
+combinacións que causarían moito ruído pero non se soubo excluír estas do programa e aínda así resulta que aquelas que maximizaban a precisión
+da rede (moitas veces por pura aleatoriedade xa que estaba chea de ruído) tiña diferenzas infímas frente a outras combinacións estables;
+entre val\_accuracy = 0.79 aos 0.80 dunha estable as que mellor acertaban tiñan o máximo en 0.808. Este proceso que levou un total de 7 horas e 20 minutos de
+compilación foi probado co que chamamos modelo\_simple e modelo\_mellorada no notebook, os resultados gráficos da comparación de
+accuracy vs val\_accuracy e loss vs val\_loss son
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/accuracy_rede_simple.png}
+        \subcaption{Precisión rede simple}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/loss_rede_simple.png}
+        \subcaption{Loss rede simple}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/accuracy_rede_modificada.png}
+        \subcaption{Precisión rede mellorada}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../imaxes loss/loss_rede_modificada.png}
+        \subcaption{Loss rede mellorada}
+    \end{subfigure}
+\end{figure}
+\newpage
+Ademais disto fixeronse moitas probas individuais con outros activadores como $mish$, $silu$, $relu$, $celu$, $leaky\_relu$, $elu$ e $softplus$.
+A modo anecdótico a representación gráfica de case todas as funcións de activación posibles dunha neuronal son as seguintes
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{../layers.pdf}
+\end{figure}
+\newpage
+Por último, os nosos intentos de atopar unha rede neuronal estable e con bastante poder predictivo e que sexa computacionalmente menos custosasç
+levounos ao seguinte modelo
+
+\begin{tcolorbox} 
+    \begin{lstlisting}[language=Python] 
+    modelo_optimizado = Sequential([ 
+        layers.Input(shape=(data.shape[1],)), 
+        layers.Dense(128, activation='silu', 
+             kernel_initializer='glorot_uniform', 
+             kernel_regularizer=L1L2(l1=0.0002, l2=0.01)), 
+        layers.Dropout(0.1), 
+        layers.Dense(16, activation='celu', 
+             kernel_initializer='he_normal', 
+             kernel_regularizer=L2(0.01)), 
+        layers.Dense(40, activation='celu', 
+             kernel_initializer='he_normal', 
+             kernel_regularizer=L2(0.01)), 
+        layers.Dropout(0.1), 
+        layers.Dense(16, activation='relu', 
+             kernel_initializer='he_normal', 
+             kernel_regularizer=L2(0.01)), 
+        layers.Dense(4, activation='softmax') ]) 
+        
+    modelo_opmizado.compile(
+        optimizer=SGD(learning_rate=0.001), 
+        loss='sparse_categorical_crossentropy', 
+        metrics=['accuracy'] ) 
+        
+    modelo_optmizado.fit(
+        x2_train_scaled, y2_train_enc,
+        epochs=70, batch_size=8,
+        validation_data=(x2_test_scaled, y2_test_enc))
+    \end{lstlisting} 
+\end{tcolorbox}
+
+\newpage
+que comparamos con outros dous modelos máis simples, os resultados gráficos son os seguintes
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{../imaxes loss/redes_comparadas.png}
+\end{figure}
 
 \end{document}
 
 % Exemplos elementais do paquete 'diffcoeff'
-\begin{gather}
-    \diff[n]{f}{x}[x_0]\\
-    \diff*{(ax^2+bx+c)}x\\
-    \diffp!{F(x,y)}x\\
-    \diffp ST[V]\\
-    \diffp L{q_k}-\diff*{\diffp L{\dot{q}_k}[]}t = 0\\
-    \diffp L{q_k}-\diff*{\diffp L{\dot{q}_k}[]}t = 0\\
-    \diffp[2,3]F{x,y,z}\\
-    \diff.pvrule.{F(x,y)}x[x=1]
-\end{gather}
